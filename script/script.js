@@ -1,3 +1,10 @@
+// synonyms func
+
+const createElementsFunc = (arr) => {
+  const synonymBtns = arr.map((elm) => `<span class="btn">${elm}</span>`);
+  return synonymBtns.join(" ");
+};
+
 // api theke json file ante hobe then btn a show show korte hobe
 const loadLesson = () => {
   fetch("https://openapi.programming-hero.com/api/levels/all")
@@ -11,8 +18,21 @@ const removeBtnActive = () => {
   allBtns.forEach((btn) => btn.classList.remove("active"));
 };
 
+// loading spinner
+const manageSpinner = (status) => {
+  if (status === true) {
+    document.getElementById("spinner").classList.remove("hidden");
+    document.getElementById("cards-container").classList.add("hidden");
+  } else {
+    document.getElementById("spinner").classList.add("hidden");
+    document.getElementById("cards-container").classList.remove("hidden");
+  }
+};
 // level
 const loadLevelWord = (id) => {
+  // spinner func
+  manageSpinner(true);
+
   const url = `https://openapi.programming-hero.com/api/level/${id}`;
   fetch(url)
     .then((res) => res.json())
@@ -36,12 +56,11 @@ const wordLoadDetails = async (id) => {
   const details = await res.json();
   wordDisplayDetails(details.data);
 };
-
+// show display details
 const wordDisplayDetails = (word) => {
-  console.log(word);
   const detailsContainer = document.getElementById("word-details");
   detailsContainer.innerHTML = `
-  <div id="word-details" class="space-y-5">
+  <div class="space-y-5">
           <h2 class="text-2xl font-bold">${word.word} (<i class="fa-solid fa-microphone-lines"></i> : ${word.pronunciation})</h2>
           <div class="">
             <h2 class="font-bold">Meaning</h2>
@@ -56,9 +75,7 @@ const wordDisplayDetails = (word) => {
           <div class="space-y-3" >
             <h2 class="font-bold">সমার্থক শব্দ গুলো</h2>
             <div class="space-x-3">
-              <span class="btn">${word.synonyms[0]}</span>
-              <span class="btn">${word.synonyms[1]}</span>
-              <span class="btn">${word.synonyms[2]}</span>
+              ${createElementsFunc(word.synonyms)}
             </div>
           </div>
           <button class="btn btn-primary active">Complete Learning</button>
@@ -88,12 +105,15 @@ const displayLevel = (words) => {
       </h3>
     </div>
     `;
+
+    manageSpinner(false);
+    return;
   }
 
   words.forEach((word) => {
     const card = document.createElement("div");
     card.innerHTML = `
-    <div class="bg-white rounded-lg text-center px-6 py-8 space-y-3 hover:-translate-y-2 hover:transition-all duration-300 hover:shadow-md">
+    <div class="bg-white rounded-lg text-center px-6 py-8 space-y-3 hover:-translate-y-2 transition-all duration-300 hover:shadow-md">
         <h3 class="text-xl font-bold">${word.word}</h3>
         <p class="text-gray-600 text-sm">meaning/pronunciation</p>
         <p class="text-lg font-medium font-bangla text-gray-500"> ${word.meaning ? word.meaning : "অর্থ নেই"} / ${word.pronunciation ? word.pronunciation : "উচ্চারণ নেই"}</p>
@@ -108,6 +128,7 @@ const displayLevel = (words) => {
 
     cardContainer.appendChild(card);
   });
+  manageSpinner(false);
 };
 
 // display show
