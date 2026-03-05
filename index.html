@@ -242,10 +242,9 @@
     <!-- modal -->
     <!-- Open the modal using ID.showModal() method -->
     <!-- <button class="btn" onclick="my_modal_5.showModal()">open modal</button> -->
-    <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
+    <dialog id="modal_word" class="modal modal-bottom sm:modal-middle">
       <div class="modal-box">
-        <h3 class="text-lg font-bold">Hello!</h3>
-        <p class="py-4">Press ESC key or click the button below to close</p>
+        <div id="word-details" class="space-y-5"></div>
         <div class="modal-action">
           <form method="dialog">
             <!-- if there is a button in form, it will close the modal -->
@@ -255,25 +254,29 @@
       </div>
     </dialog>
 
-    <!-- demo -->
-
-    <div>
-      <h3>egger title</h3>
-      <p>meaning</p>
-      <p>agrohi</p>
-
-      <p>example</p>
-      <p>The kids were eager to open their gifts.</p>
-
-      <p>somarthok sobdo</p>
-      <div>
-        <button>1</button>
-        <button>2</button>
-        <button>3</button>
+    <!--  -->
+    <!-- <div id="word-details" class="space-y-5">
+      <h2 class="text-2xl font-bold">${word.word}</h2>
+      <div class="">
+        <h2 class="font-bold">Meaning</h2>
+        <p>${word.meaning}</p>
       </div>
-      <button>last</button>
-    </div>
 
+      <div class="">
+        <h2 class="font-bold">Example</h2>
+        <p>${word.sentence}</p>
+      </div>
+
+      <div>
+        <h2 class="font-bold">সমার্থক শব্দ গুলো</h2>
+        <div class="space-x-3">
+          <span class="btn">${word.synonyms[0]}</span>
+          <span class="btn">${word.synonyms[1]}</span>
+          <span class="btn">${word.synonyms[2]}</span>
+        </div>
+      </div>
+      <button class="btn btn-primary active">Complete Learning</button>
+    </div> -->
     <!-- js -->
     <script src="./script/script.js"></script>
   </body>

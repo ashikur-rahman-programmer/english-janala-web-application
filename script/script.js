@@ -29,6 +29,46 @@ const loadLevelWord = (id) => {
     });
 };
 
+//wordDetails
+const wordLoadDetails = async (id) => {
+  const url = `https://openapi.programming-hero.com/api/word/${id}`;
+  const res = await fetch(url);
+  const details = await res.json();
+  wordDisplayDetails(details.data);
+};
+
+const wordDisplayDetails = (word) => {
+  console.log(word);
+  const detailsContainer = document.getElementById("word-details");
+  detailsContainer.innerHTML = `
+  <div id="word-details" class="space-y-5">
+          <h2 class="text-2xl font-bold">${word.word} (<i class="fa-solid fa-microphone-lines"></i> : ${word.pronunciation})</h2>
+          <div class="">
+            <h2 class="font-bold">Meaning</h2>
+            <p>${word.meaning}</p>
+          </div>
+
+          <div class="">
+            <h2 class="font-bold">Example</h2>
+            <p>${word.sentence}</p>
+          </div>
+
+          <div class="space-y-3" >
+            <h2 class="font-bold">সমার্থক শব্দ গুলো</h2>
+            <div class="space-x-3">
+              <span class="btn">${word.synonyms[0]}</span>
+              <span class="btn">${word.synonyms[1]}</span>
+              <span class="btn">${word.synonyms[2]}</span>
+            </div>
+          </div>
+          <button class="btn btn-primary active">Complete Learning</button>
+        </div>
+
+  `;
+
+  document.getElementById("modal_word").showModal();
+};
+
 // level word display
 const displayLevel = (words) => {
   const cardContainer = document.getElementById("cards-container");
@@ -58,7 +98,7 @@ const displayLevel = (words) => {
         <p class="text-gray-600 text-sm">meaning/pronunciation</p>
         <p class="text-lg font-medium font-bangla text-gray-500"> ${word.meaning ? word.meaning : "অর্থ নেই"} / ${word.pronunciation ? word.pronunciation : "উচ্চারণ নেই"}</p>
         <div class="flex justify-between items-center gap-5 mt-6">
-          <button onclick="my_modal_5.showModal()" class="btn"><i class="fa-solid fa-circle-info"></i></button>
+          <button onclick="wordLoadDetails(${word.id})" class="btn"><i class="fa-solid fa-circle-info"></i></button>
           <button class="btn">
             <i class="fa-solid fa-volume-high"></i>
           </button>
@@ -69,7 +109,6 @@ const displayLevel = (words) => {
     cardContainer.appendChild(card);
   });
 };
-// loadLevelWord();
 
 // display show
 const displayLesson = (lessons) => {
